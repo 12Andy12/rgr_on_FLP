@@ -1,0 +1,22 @@
+goal:- open('qwe.txt', read, F),
+       set_input(F),
+       write_screen(F),
+       close(F).
+       
+rev([],[]).
+rev([H|T],L):-
+rev(T,T2),
+append(T2,[H],L).
+
+write_screen(_):- at_end_of_stream.
+write_screen(F):- read_line_to_codes(F, L),
+                  string_to_list(S, L),
+                  rev(L, R),
+                  tell('123.txt'),
+                  string_chars(R, A),
+                  split_string(A, ' ', '', Q),
+                  atomic_list_concat(Q, '', W),
+                  writeln(W),
+                  write_screen(F),
+                  told.
+
